@@ -9,8 +9,8 @@ from tkinter import *
 
 pygame.init() #starts pygame
 vec = pygame.math.Vector2 # for two dimensional creates x and y
-HEIGHT = 1000#height and width of the program
-WIDTH = 1000
+HEIGHT = 350#height and width of the program
+WIDTH = 700
 ACC= 0.3 #acceleration
 FRIC = -0.10#friction
 FPS = 60
@@ -24,7 +24,11 @@ pygame.display.set_caption("Game")#name of game
 class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
+        self.bgimage = pygame.image.load("Background.png")
+        self.bgY = 0
+        self.bgX = 0
+    def render(self):
+        displaysurface.blit(self.bgimage,(self.bgX, self.bgX))
 
 class Ground(pygame.sprite.Sprite):
     def __init__(self):
@@ -40,23 +44,29 @@ class Ground(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load('Player_Sprite_R.png')#for the picture of the char
+        self.rect = self.image.get_rect()
+
+        #position and direction of char
+        self.vx = 0
+        self.pos = vec((340,249))
+        self.vel = vec(0,0)#veocity of char
+        self.acc = vec(0, 0) #acceleration of player
+        self.direction = 'RIGHT'
+
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-class Background(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.bgimage = pygame.image.load("Background.png")
-        self.bgY = 0
-        self.bgX = 0
+
 
     def render(self):
         displaysurface.blit(self.bgimage, (self.bgX, self.bgY))
 
 background = Background()
 ground = Ground()
+player = Player()
 #creating the background
 
 
@@ -81,6 +91,7 @@ while True:
 
     background.render()#order of rendering matters
     ground.render()
+    displaysurface.blit(player.image, player.rect)
 
     pygame.display.update()
     FPS_CLOCK.tick(FPS)
