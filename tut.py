@@ -46,7 +46,9 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('Player_Sprite_R.png')#for the picture of the char
         self.rect = self.image.get_rect()
-
+        self.jumping = False #so player doesnt fall off screen
+        self.running = False
+        self.move_frame = 0
         #position and direction of char
         self.vx = 0
         self.pos = vec((340,249))
@@ -54,7 +56,50 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0, 0) #acceleration of player
         self.direction = 'RIGHT'
 
+    def move(self):
+        #keeps a constant acceleration
+        self.acc = vec(0, 0.5)
+        if abs(self.vel.x) > 0.3:
+            self.running = True
+        else:
+            self.running = False
+        pressed_keys = pygame.key.get_pressed()# for current key presses
 
+        if pressed_keys[K_LEFT]:
+            self.acc.x = -ACC
+        if pressed_keys[K_RIGHT]:
+            self.acc.x = ACC
+            # formula to calculate velocity
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc  # updates the new position
+
+        if self.pos.x > WIDTH:
+            self.pos.x = 0
+        if self.pos.x < 0:
+            self.pos.x = WIDTH
+        self.rect.midbottom = self.pos
+
+    def gravity_check(self):
+        hits = pygame.sprite.spritecollide(player, ground_group, False)
+        if self.vel.y > 0:
+            if hits:
+                lowest = hits[0]
+                if self.pos.y < lowest.rect.bottom:
+                    self.pos.y = lowest.rect.top + 1
+                    self.vel.y = 0
+                    self.jumping = False
+
+    def jump(self):
+        self.rect.x += 1
+        # checks to see if player is on the ground
+        hits = pygame.sprite.spritecollide(self, ground_group, False)
+
+        self.rect.x -= 1
+        # if touching the ground and not jumping
+        if hits and not self.jumping:
+            self.jumping = True
+            self.vel.y = -16
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -66,8 +111,21 @@ class Enemy(pygame.sprite.Sprite):
 
 background = Background()
 ground = Ground()
+ground_group = pygame.sprite.Group()
+ground_group.add(ground)
 player = Player()
 #creating the background
+
+#
+run_ani_R = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load("Player_Attack_R.png"),
+             pygame.image.load("Player_Attack2_R.png"), pygame.image.load("Player_Attack2_R.png"),
+             pygame.image.load('Player_Attack3_R.png'), pygame.image.load("Player_Attack3_R.png"),
+             pygame.image.load("Player_Attack4_R.png"), pygame.image.load("Player_Attack4_R.png"),
+             pygame.image.load("Player_Attack5_R.png"), pygame.image.load("Player_Attack5_R.png"),
+             pygame.image.load("Player_Sprite_R.png")]
+run_ani_L = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load('Player_Attack_L.png'),
+             pygame.image.load('Player_Attack2_L.png', pygame.image.load('Player_Attack2_L.png')]
+
 
 
 #self.bgy and self.bgx are going for scrolling backgrounds
@@ -76,6 +134,7 @@ player = Player()
 
 while True:
     #will run when the close window button is clicked
+    player.gravity_check()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -87,14 +146,17 @@ while True:
 
         #Event handling for a range of different key presses
         if event.type == pygame.KEYDOWN:
-            pass
+            if event.key == pygame.K_SPACE:
+                player.jump()
 
     background.render()#order of rendering matters
     ground.render()
+    player.move()
     displaysurface.blit(player.image, player.rect)
 
     pygame.display.update()
     FPS_CLOCK.tick(FPS)
+
 
 
 
