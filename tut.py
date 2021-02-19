@@ -19,7 +19,21 @@ COUNT = 0
 
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))#area of game
 pygame.display.set_caption("Game")#name of game
-
+attack_ani_R = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load("Player_Attack_R.png"),
+                     pygame.image.load("Player_Attack2_R.png"), pygame.image.load("Player_Attack2_R.png"),
+                     pygame.image.load('Player_Attack3_R.png'), pygame.image.load("Player_Attack3_R.png"),
+                     pygame.image.load("Player_Attack4_R.png"), pygame.image.load("Player_Attack4_R.png"),
+                     pygame.image.load("Player_Attack5_R.png"), pygame.image.load("Player_Attack5_R.png"),
+                     pygame.image.load("Player_Sprite_R.png")]
+attack_ani_L = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load('Player_Attack_L.png'),
+                     pygame.image.load('Player_Attack2_L.png'), pygame.image.load('Player_Attack2_L.png'),
+                                       pygame.image.load('Player_Attack3_L.png'),
+                                       pygame.image.load('Player_Attack3_L.png'),
+                                       pygame.image.load("Player_Attack4_L.png"),
+                                       pygame.image.load("Player_Attack4_L.png"),
+                                       pygame.image.load("Player_Attack5_L.png"),
+                                       pygame.image.load("Player_Attack5_L.png"),
+                                       pygame.image.load('Player_Sprite_R.png')]
 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
@@ -55,8 +69,12 @@ class Player(pygame.sprite.Sprite):
         self.vel = vec(0,0)#veocity of char
         self.acc = vec(0, 0) #acceleration of player
         self.direction = 'RIGHT'
+        self.attacking = False
+        self.attacking_frame = 0
 
-    def move(self):
+
+
+        def move(self):
         #keeps a constant acceleration
         self.acc = vec(0, 0.5)
         if abs(self.vel.x) > 0.3:
@@ -100,6 +118,15 @@ class Player(pygame.sprite.Sprite):
         if hits and not self.jumping:
             self.jumping = True
             self.vel.y = -16
+    def attack(self):
+        if self.attacking_frame > 10:
+            self.attacking_frame = 0
+            self.attacking = False
+        if self.direction == "RIGHT":
+            self.image = attack_ani_R
+        if self.direction == "LEFT":
+            self.image = attack_ani_L
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -117,14 +144,9 @@ player = Player()
 #creating the background
 
 #
-run_ani_R = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load("Player_Attack_R.png"),
-             pygame.image.load("Player_Attack2_R.png"), pygame.image.load("Player_Attack2_R.png"),
-             pygame.image.load('Player_Attack3_R.png'), pygame.image.load("Player_Attack3_R.png"),
-             pygame.image.load("Player_Attack4_R.png"), pygame.image.load("Player_Attack4_R.png"),
-             pygame.image.load("Player_Attack5_R.png"), pygame.image.load("Player_Attack5_R.png"),
-             pygame.image.load("Player_Sprite_R.png")]
-run_ani_L = [pygame.image.load('Player_Sprite_R.png'), pygame.image.load('Player_Attack_L.png'),
-             pygame.image.load('Player_Attack2_L.png', pygame.image.load('Player_Attack2_L.png')]
+
+
+
 
 
 
