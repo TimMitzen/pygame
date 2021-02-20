@@ -158,7 +158,7 @@ class Player(pygame.sprite.Sprite):
                 self.image = run_animation_L[self.move_frame]
                 self.direction = 'LEFT'
             self.move_frame += 1
-        if abs(self.vel.x) < 0.2 and self.move_frame != 0:
+        if abs(self.vel.x) < 0.3 and self.move_frame != 0:
             self.move_frame = 0
             if self.direction == "RIGHT":
                 self.image = run_animation_R[self.move_frame]
