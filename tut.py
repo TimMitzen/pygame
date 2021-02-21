@@ -12,7 +12,7 @@ pygame.init()  # starts pygame
 vec = pygame.math.Vector2  # for two dimensional creates x and y
 HEIGHT = 350  # height and width of the program
 WIDTH = 700
-ACC = 0.3  # acceleration
+ACC = 0.4 # acceleration
 FRIC = -0.10  # friction
 FPS = 60
 FPS_CLOCK = pygame.time.Clock()  # for frames per second
