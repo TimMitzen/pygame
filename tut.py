@@ -126,7 +126,7 @@ class Player(pygame.sprite.Sprite):
         # if touching the ground and not jumping
         if hits and not self.jumping:
             self.jumping = True
-            self.vel.y = -16
+            self.vel.y = -15
 
     def correction(self):
         if self.attacking_frame ==1:
