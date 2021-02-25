@@ -86,7 +86,7 @@ class Player(pygame.sprite.Sprite):
     def move(self):
         # keeps a constant acceleration
         self.acc = vec(0, 0.5)
-        if abs(self.vel.x) > 0.3:
+        if abs(self.vel.x) > 0.2:
             self.running = True
         else:
             self.running = False
