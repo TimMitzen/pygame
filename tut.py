@@ -83,7 +83,7 @@ class Player(pygame.sprite.Sprite):
         self.attacking = False
         self.attacking_frame = 0
 
-    def move(self):
+    def move(self):#moves the char
         # keeps a constant acceleration
         self.acc = vec(0, 0.5)
         if abs(self.vel.x) > 0.2:
@@ -117,7 +117,7 @@ class Player(pygame.sprite.Sprite):
                     self.vel.y = 0
                     self.jumping = False
 
-    def jump(self):
+    def jump(self): # jump
         self.rect.x += 1
         # checks to see if player is on the ground
         hits = pygame.sprite.spritecollide(self, ground_group, False)
@@ -134,7 +134,7 @@ class Player(pygame.sprite.Sprite):
         if self.attacking_frame == 10:
             self.pos.x += 20
 
-    def attack(self):
+    def attack(self):#  attack
         if self.attacking_frame > 10:
             self.attacking_frame = 0
             self.attacking = False
@@ -187,7 +187,7 @@ player = Player()
 # render is to display the background
 # blit drows the background with two tuples aka self.bgx ang self.bgy
 
-while True:
+while True:#game loop
     # will run when the close window button is clicked
     player.gravity_check()
     for event in pygame.event.get():
