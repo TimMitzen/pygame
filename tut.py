@@ -165,6 +165,7 @@ class Player(pygame.sprite.Sprite):
             elif self.direction == "LEFT":
                 self.image = run_animation_L[self.move_frame]
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
