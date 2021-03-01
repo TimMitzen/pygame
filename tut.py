@@ -213,7 +213,7 @@ while True:#game loop
     ground.render()
     player.move()
     player.update()
-    if player.attacking == True:
+    if player.attacking:
         player.attack()
     displaysurface.blit(player.image, player.rect)
 
