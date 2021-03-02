@@ -6,13 +6,13 @@ import random
 from tkinter import filedialog
 from tkinter import *
 
-# tkinter is a gui libarie
+# tkinter is a gui libary
 
 pygame.init()  # starts pygame
 vec = pygame.math.Vector2  # for two dimensional creates x and y
 HEIGHT = 350  # height and width of the program
 WIDTH = 700
-ACC = 0.5 # acceleration
+ACC = 0.5 #acceleration
 FRIC = -0.9  # friction
 FPS = 60
 FPS_CLOCK = pygame.time.Clock()  # for frames per second
@@ -43,6 +43,8 @@ run_animation_R = [pygame.image.load("Player_Sprite_R.png"), pygame.image.load('
                    pygame.image.load("Player_Sprite3_R.png"), pygame.image.load("Player_Sprite4_R.png"),
                    pygame.image.load("Player_Sprite5_R.png"), pygame.image.load('Player_Sprite6_R.png'),
                    pygame.image.load("Player_Sprite_R.png")]
+
+
 class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
