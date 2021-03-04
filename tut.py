@@ -121,7 +121,7 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self): # jump
         self.rect.x += 1
-        # checks to see if player is on the ground
+
         hits = pygame.sprite.spritecollide(self, ground_group, False)
 
         self.rect.x -= 1
